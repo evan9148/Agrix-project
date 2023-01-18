@@ -10,14 +10,20 @@ module.exports = mongoose => {
           district: String,
           latitude: Number,
           long:Number,
-          areaOfPlot : String,
-          perimeterOfPlot: String,
+          areaOfPlot : Number,
+          perimeterOfPlot: Number,
           plotShape :String,
           soilType : String,
           nutrientContentAnalysis: String,
           waterSource : String,
           plotId:String,
-          clusterId:String
+          clusterId:String,
+          cropType: String,
+          variety: String,
+          yield: String,
+          cultivationDate: String,
+          harvestingDate: String,
+          seedAmount: Number
       },
       { timestamps: true }
     )

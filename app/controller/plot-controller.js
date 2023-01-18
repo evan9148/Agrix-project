@@ -36,7 +36,13 @@ exports.addPlot =  (req, res) => {
         nutrientContentAnalysis:req.body.nutrientContentAnalysis,
         waterSource : req.body.waterSource,
         plotId:req.body.plotId,
-        clusterId:req.body.clusterId
+        clusterId:req.body.clusterId,
+        cropType: req.body.cropType,
+        variety: req.body.variety,
+        yield: req.body.yield,
+        cultivationDate: req.body.cultivationDate,
+        harvestingDate: req.body.harvestingDate,
+        seedAmount: req.body.seedAmount
     });
 
     plot
