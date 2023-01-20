@@ -36,7 +36,13 @@ exports.addPlot =  (req, res) => {
         nutrientContentAnalysis:req.body.nutrientContentAnalysis,
         waterSource : req.body.waterSource,
         plotId:req.body.plotId,
-        clusterId:req.body.clusterId
+        clusterId:req.body.clusterId,
+        cropType: req.body.cropType,
+        variety: req.body.variety,
+        yield: req.body.yield,
+        cultivationDate: req.body.cultivationDate,
+        harvestingDate: req.body.harvestingDate,
+        seedAmount: req.body.seedAmount
     });
 
     plot
@@ -85,8 +91,9 @@ exports.plotByClusterId = (req, res) => {
     });
 };
 
+
 exports.plotById = (req, res) => {
-  const id =req.params.id;
+  const id = req.params.id;
   Plot.findById(id)
     .then(data => {
       if (!data)
@@ -104,12 +111,10 @@ exports.plotById = (req, res) => {
 // search api for plot by plotId...
 exports.searchPlot = (req, res) => {
   const plotId = { $regex: ".*" + req.query.plotId + ".*" , $options: "i" }
-  const Object={}
-  if(plotName){
-    const plot =Object.plotName
-  } 
+  console.log(plotId,"pppppp")
   Plot.find({plotId})
     .then(data => {
+      console.log(data,"dddd")
       if (!data)
         res.status(404).send({ message: "Not found plot with plotId" });
       else res.send(data);

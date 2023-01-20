@@ -25,6 +25,7 @@ db.implementIdentifer = require("./implement-identifier")(mongoose);
 db.vendor = require("./vendor")(mongoose);
 db.machinehp = require("./machine-hp")(mongoose);
 db.machinebrand = require("./machine-brand")(mongoose);
+db.cultivationDate = require("./cultivation-date")(mongoose);
 
 db.ROLES = ['admin'];
 module.exports = db;

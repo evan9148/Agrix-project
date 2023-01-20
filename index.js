@@ -1,4 +1,4 @@
-var express = require('express');
+const express = require('express');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
@@ -56,6 +56,7 @@ require("./app/routes/implement-identifier-route")(app);
 require("./app/routes/vendor-route")(app);
 require("./app/routes/machine-hp-route")(app);
 require("./app/routes/machine-brand-route")(app);
+require("./app/routes/cultivation-route")(app);
 
 
   // set port, listen for requests
