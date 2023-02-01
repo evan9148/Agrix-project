@@ -20,7 +20,7 @@ module.exports = mongoose => {
           clusterId:String,
           cropType: String,
           variety: String,
-          yield: String,
+          yield: Number,
           cultivationDate: String,
           harvestingDate: String,
           seedAmount: Number
