@@ -2,6 +2,8 @@ const db=require("../models");
 const Farmer=db.farmer;
 const Plot=db.plot;
 const Cluster=db.cluster;
+const Machine = db.machine;
+const Driver = db.driver;
 const FarmMachineHistory=db.farmMachine;
 
 exports.countData  = async (req,res)=>  {
@@ -9,7 +11,9 @@ exports.countData  = async (req,res)=>  {
         farmerStat:0,
         plotStat:0,
         clusterStat:0,
-        carmMachineHistoryStat:0
+        driverStat:0,
+        farmMachineHistoryStat:0,
+        machineStat:0
     };
   
     await Farmer.count().then(function (count, err) {
@@ -25,7 +29,13 @@ exports.countData  = async (req,res)=>  {
     });
 
     await FarmMachineHistory.count().then(function (count, err) {
-        response.FarmMachineHistoryStat = count
+        response.farmMachineHistoryStat = count
+    });
+    await Machine.count().then(function (count, err) {
+        response.machineStat = count
+    });
+    await Driver.count().then(function (count, err) {
+        response.driverStat = count
     });
     
     // console.log("conting stat", response);
