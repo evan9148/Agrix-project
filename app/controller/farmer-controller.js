@@ -2,8 +2,8 @@ const db = require("../models");
 const Farmer = db.farmer;
 
 // Get All Farmer Details...
-exports.allFarmer =(req,res) =>{
-  const  farmerId = req.query.farmerId;
+exports.allFarmer = (req, res) => {
+  const farmerId = req.query.farmerId;
   var condition = farmerId ? { farmerId: { $regex: new RegExp(farmerId), $options: "i" } } : {};
   Farmer.find(condition)
     .then(data => {
@@ -19,56 +19,56 @@ exports.allFarmer =(req,res) =>{
 
 
 // Get All Farmer By page...
-exports.farmer = async (req,res) => {
+exports.farmer = async (req, res) => {
   try {
     const page = parseInt(req.query.page);
     const size = parseInt(req.query.size);
 
-    const skip = (page -1) * size;
+    const skip = (page - 1) * size;
 
     const total = await Farmer.countDocuments();
-    const farmer = await Farmer.find().skip(skip).limit(size);
+    const farmer = await Farmer.find().sort([['createdAt', 'desc']]).skip(skip).limit(size);
 
     res.json({
-        farmer,
-        total,
-        page, 
-        size
+      farmer,
+      total,
+      page,
+      size
     });
   } catch (error) {
-      console.log(error)
-      res.status(400).json(error)
+    console.log(error)
+    res.status(400).json(error)
   }
 }
 
 // Add for farmer...!
-exports.addFarmer =  (req, res) => {
-    const farmer = new Farmer({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        farmerId: req.body.farmerId,
-        clusterCode:req.body.clusterCode,
-        ownerType: req.body.ownerType,
-        address: req.body.address,
-        contact: req.body.contact,
-        clusterId:req.body.clusterId,
-        farmingSeason: req.body.farmingSeason,
-        cropType: req.body.cropType,
-        cropSubType: req.body.cropSubType,
-        // plotArea: req.body.plotArea,
-    });
+exports.addFarmer = (req, res) => {
+  const farmer = new Farmer({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    farmerId: req.body.farmerId,
+    clusterCode: req.body.clusterCode,
+    ownerType: req.body.ownerType,
+    address: req.body.address,
+    contact: req.body.contact,
+    clusterId: req.body.clusterId,
+    farmingSeason: req.body.farmingSeason,
+    cropType: req.body.cropType,
+    cropSubType: req.body.cropSubType,
+    // plotArea: req.body.plotArea,
+  });
 
-    farmer
-        .save(farmer)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(error => {
-            res.status(500).send({
-                message:
-                    error.message || "some error occurred while creating the farmer"
-            });
-        });
+  farmer
+    .save(farmer)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(error => {
+      res.status(500).send({
+        message:
+          error.message || "some error occurred while creating the farmer"
+      });
+    });
 }
 
 // Get farmer by Id
@@ -90,9 +90,9 @@ exports.farmerById = (req, res) => {
 
 // search api for farmer by ClusterId or firstName...
 exports.searchFarmer = (req, res) => {
-  const clusterId = { $regex: ".*" + req.query.clusterId + ".*" , $options: "i" }
-  const firstName = { $regex: ".*" + req.query.firstName + ".*" , $options: "i" }
-  Farmer.find({$or: [{clusterId},{firstName}]})
+  const clusterId = { $regex: ".*" + req.query.clusterId + ".*", $options: "i" }
+  const firstName = { $regex: ".*" + req.query.firstName + ".*", $options: "i" }
+  Farmer.find({ $or: [{ clusterId }, { firstName }] })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found farmer with clusterId or firstName" });
@@ -133,7 +133,7 @@ exports.updateFarmerById = (req, res) => {
 //Get Api for farmers List By ClusterId
 exports.farmersByClusterId = (req, res) => {
   const clusterid = req.params.clusterId
-  Farmer.find({clusterId: clusterid})
+  Farmer.find({ clusterId: clusterid })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found Farmer with id " + clusterid });
@@ -171,24 +171,24 @@ exports.deleteFarmerById = (req, res) => {
 
 
 
-exports.farmerCluster = (req,res) =>{
+exports.farmerCluster = (req, res) => {
   // const  clusterId= req.query.clusterId;
   //   var condition = clusterId ? { clusterId: { $regex: new RegExp(clusterId), $options: "i" } } : {};
-    Farmer.find(
-      {
-        "$or":[
-          {clusterId:{$regex:req.params.key}}
-        ]
-      }
-    )
-      .then(data => {
-        const d=res.send(data);
-        console.log(d);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving ClusterId."
-        });
+  Farmer.find(
+    {
+      "$or": [
+        { clusterId: { $regex: req.params.key } }
+      ]
+    }
+  )
+    .then(data => {
+      const d = res.send(data);
+      console.log(d);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving ClusterId."
       });
+    });
 }

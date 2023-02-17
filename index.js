@@ -3,9 +3,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 var corsOptions = {
-  origin:'*', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200,
+  origin: '*',
+  credentials: true,            //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
@@ -59,9 +59,9 @@ require("./app/routes/machine-brand-route")(app);
 require("./app/routes/cultivation-route")(app);
 
 
-  // set port, listen for requests
+// set port, listen for requests
 const PORT = process.env.PORT || 8081;
-app.get("/", (req, res) => res.json({message: "Welcome to our deliveryHistory Application!"}));
+app.get("/", (req, res) => res.json({ message: "Welcome to our deliveryHistory Application!" }));
 
 
 

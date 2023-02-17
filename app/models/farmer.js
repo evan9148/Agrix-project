@@ -10,12 +10,10 @@ module.exports = mongoose => {
             ownerType: String,
             address:String,
             contact: Number,
-            // clusterId:{type:Schema.Types.ObjectId, ref:"cluster"}, //impliment that wise
             clusterId:String,
             farmingSeason: String,
             cropType: {type: mongoose.Schema.Types.ObjectId, ref: "crop-type"},
-            cropSubType:String,
-            // plotArea: Number,
+            cropSubType:String
         },
         { timestamps: true }
       )

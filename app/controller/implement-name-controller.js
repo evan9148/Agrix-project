@@ -5,38 +5,38 @@ const ImplementName = db.implementName;
 // get ImplementName..
 exports.getImplementName = (req, res) => {
   ImplementName.find()
-      .then(data => {
-        if (!data)
-          res.status(404).send({ message: "Not found" });
-        else res.send(data);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .send({ message: "Error retrieving ImplementType" + err });
-      });
-  };
-  
-  
+    .then(data => {
+      if (!data)
+        res.status(404).send({ message: "Not found" });
+      else res.send(data);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving ImplementType" + err });
+    });
+};
+
+
 // add ImplementName...
-exports.addImplementName = (req,res) =>{
+exports.addImplementName = (req, res) => {
   const Implementname = new ImplementName({
-        name: req.body.name,
-        shortName: req.body.shortName
+    name: req.body.name,
+    shortName: req.body.shortName
   });
 
   Implementname
-      .save()
-      .then(data => {
-          res.send(data);
-          console.log(data)
-      })
-      .catch(error => {
-          res.status(500).send({
-              message:
-                  error.message || "some error occurred while creating the Implementype"
-          });
+    .save()
+    .then(data => {
+      res.send(data);
+      console.log(data)
+    })
+    .catch(error => {
+      res.status(500).send({
+        message:
+          error.message || "some error occurred while creating the Implementype"
       });
+    });
 }
 
 
@@ -49,14 +49,14 @@ exports.updateImplementNameById = (req, res) => {
     });
   }
   const id = req.params.id;
-  ImplementName.findByIdAndUpdate(id, req.body, {new : true, useFindAndModify: false })
+  ImplementName.findByIdAndUpdate(id, req.body, { new: true, useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
           message: `Cannot update ImplementName with id=${id}. Maybe driver was not found!`
         });
-      } else 
-        res.send({ 
+      } else
+        res.send({
           message: "ImplementName was updated successfully.",
         });
     })

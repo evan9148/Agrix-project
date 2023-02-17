@@ -3,7 +3,7 @@ const Driver = db.driver;
 
 
 // Get Driver Details
-exports.allDriver = (req,res) => {
+exports.allDriver = (req, res) => {
   const driverId = req.query.driverId;
   Driver.find(driverId)
     .then(data => {
@@ -20,61 +20,61 @@ exports.allDriver = (req,res) => {
 
 
 // get Driver by page..
-exports.Driver = async (req,res) => {
+exports.Driver = async (req, res) => {
   try {
     const page = parseInt(req.query.page);
     const size = parseInt(req.query.size);
 
-    const skip = (page -1) * size;
+    const skip = (page - 1) * size;
 
     const total = await Driver.countDocuments();
-    const driver = await Driver.find().skip(skip).limit(size);
+    const driver = await Driver.find().sort([['createdAt', 'desc']]).skip(skip).limit(size);
 
     res.json({
-        driver,
-        total,
-        page, 
-        size
+      driver,
+      total,
+      page,
+      size
     });
-} catch(error) {
+  } catch (error) {
     console.log(error)
     res.status(400).json(error)
-}
+  }
 }
 
 
 
 // Add Driver
-exports.addDriver = (req,res) =>{
-    const driver=new Driver({
-        driverId:req.body.driverId,
-        firstName:req.body.firstName,
-        lastName:req.body.lastName,
-        contactDetails:req.body.contactDetails,
-        village:req.body.village,
-        district:req.body.district,
-        state:req.body.state,
-        clusterId:req.body.clusterId
-    });
+exports.addDriver = (req, res) => {
+  const driver = new Driver({
+    driverId: req.body.driverId,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    contactDetails: req.body.contactDetails,
+    village: req.body.village,
+    district: req.body.district,
+    state: req.body.state,
+    clusterId: req.body.clusterId
+  });
 
-    driver
-        .save(driver)
-        .then(data =>{
-            res.send(data);
-            console.log(data)
-        })
-        .catch(error =>{
-            res.status(500).send({
-                message:
-                    error.message || "some error occurred while creating the driver"
-            });
-        });
+  driver
+    .save(driver)
+    .then(data => {
+      res.send(data);
+      console.log(data)
+    })
+    .catch(error => {
+      res.status(500).send({
+        message:
+          error.message || "some error occurred while creating the driver"
+      });
+    });
 }
 
 
 // Get driver by Id
 exports.driverById = (req, res) => {
-  const id =  req.params.id;
+  const id = req.params.id;
   Driver.findById(id)
     .then(data => {
       if (!data)
@@ -91,20 +91,20 @@ exports.driverById = (req, res) => {
 
 // search api for driver by driverId or driverName
 exports.searchDriver = (req, res) => {
-  const firstName = { $regex: ".*" + req.query.firstName + ".*" , $options: "i" }
-  const driverId = { $regex: ".*" + req.query.driverId + ".*" , $options: "i" }
+  const firstName = { $regex: ".*" + req.query.firstName + ".*", $options: "i" }
+  const driverId = { $regex: ".*" + req.query.driverId + ".*", $options: "i" }
   // console.log(driverId, "drhgiu")
   // console.log(firstName, "sshdghs")
-  Driver.find({$or : [{firstName},{driverId}]})
+  Driver.find({ $or: [{ firstName }, { driverId }] })
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found Driver with firstName or lastname"  });
+        res.status(404).send({ message: "Not found Driver with firstName or lastname" });
       else res.send(data);
     })
     .catch(err => {
       res
         .status(500)
-        .send({ message: "Error retrieving Driver with firstName or lastname" , err});
+        .send({ message: "Error retrieving Driver with firstName or lastname", err });
     });
 };
 
@@ -116,16 +116,16 @@ exports.updateDriverById = (req, res) => {
     });
   }
   const id = req.params.id;
-  Driver.findByIdAndUpdate(id, req.body, {new : true, useFindAndModify: false })
+  Driver.findByIdAndUpdate(id, req.body, { new: true, useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
           message: `Cannot update driver with id=${id}. Maybe driver was not found!`
         });
-      } else res.send({ 
+      } else res.send({
         message: "driver was updated successfully.",
-        driver:data
-    });
+        driver: data
+      });
     })
     .catch(err => {
       res.status(500).send({

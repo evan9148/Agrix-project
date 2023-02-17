@@ -3,7 +3,7 @@ const ClusterId = db.clusterId;
 
 
 // Add for clusterId...!
-exports.addCluster =  (req, res) => {
+exports.addCluster = (req, res) => {
     const cluster = new ClusterId({
         clusterId: req.body.clusterId
     });
@@ -27,7 +27,7 @@ exports.getClusterId = (req, res) => {
     ClusterId.find({})
         .then(data => {
             if (!data)
-                res.status(404).send({ message: "Not found Farmer with id "});
+                res.status(404).send({ message: "Not found Farmer with id " });
             else res.send(data);
         })
         .catch(err => {
@@ -39,7 +39,7 @@ exports.getClusterId = (req, res) => {
 
 
 exports.getByClusterId = (req, res) => {
-    ClusterId.find({clusterId:req.params.clusterId})
+    ClusterId.find({ clusterId: req.params.clusterId })
         .then(data => {
             if (!data)
                 res.status(404).send({ message: "Not found Farmer with id " + clusterid });
@@ -50,5 +50,5 @@ exports.getByClusterId = (req, res) => {
                 .status(500)
                 .send({ message: "Error retrieving Farmer with id=" + clusterid });
         });
-  };
+};
 

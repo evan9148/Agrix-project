@@ -49,7 +49,7 @@ exports.addMachine = async (req, res) => {
 };
 
 
-exports.allMachine = (req,res) =>{
+exports.allMachine = (req, res) => {
   Machine.find()
     .then(data => {
       if (!data)
@@ -73,7 +73,7 @@ exports.machine = async (req, res) => {
     const skip = (page - 1) * size;
 
     const total = await Machine.countDocuments();
-    const machine = await Machine.find().skip(skip).limit(size);
+    const machine = await Machine.find().sort([['createdAt', 'desc']]).skip(skip).limit(size);
 
     res.json({
       machine,
@@ -107,8 +107,8 @@ exports.machineById = (req, res) => {
 
 // search api for machine by implementCode...
 exports.searchMachine = (req, res) => {
-  const implementCode = { $regex: ".*" + req.query.implementCode + ".*" , $options: "i" }
-  Machine.find({implementCode})
+  const implementCode = { $regex: ".*" + req.query.implementCode + ".*", $options: "i" }
+  Machine.find({ implementCode })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found machine with implementCode" });

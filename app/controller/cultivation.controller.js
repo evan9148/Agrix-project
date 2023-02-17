@@ -3,10 +3,10 @@ const CultivationDate = db.cultivationDate;
 
 
 //Add for cultivation
-exports.addCultivation = (req,res) =>{
-    const cultivation = new CultivationDate ({
-       plotId: req.body.plotId,
-       cultivationDate: req.body.cultivationDate
+exports.addCultivation = (req, res) => {
+    const cultivation = new CultivationDate({
+        plotId: req.body.plotId,
+        cultivationDate: req.body.cultivationDate
     });
 
     cultivation
@@ -14,7 +14,7 @@ exports.addCultivation = (req,res) =>{
         .then(data => {
             res.send(data);
         })
-        .catch(error =>{
+        .catch(error => {
             res.status(500).send({
                 messsage:
                     error.messsage || "some error occurred while creating the cultivation"
@@ -24,33 +24,33 @@ exports.addCultivation = (req,res) =>{
 
 
 // Get cultivation...
-exports.getCultivation = (req,res) =>{
+exports.getCultivation = (req, res) => {
     CultivationDate.find()
-    .then(data =>{
-        if(!data)
-            res.status(404).send({messsage:"Not found cultivation"});
-        else res.send(data);
-    })
-    .catch(error =>{
-        res
-            .status(500)
-            .send({messsage:"Error retrieving cultivation", error})
-    });
+        .then(data => {
+            if (!data)
+                res.status(404).send({ messsage: "Not found cultivation" });
+            else res.send(data);
+        })
+        .catch(error => {
+            res
+                .status(500)
+                .send({ messsage: "Error retrieving cultivation", error })
+        });
 }
 
 
 // Get cultivation by plotId...
-exports.getCultivationByplot = (req,res) => {
+exports.getCultivationByplot = (req, res) => {
     const plot = req.params.plot;
-    CultivationDate.find({plotId: plot})
-    .then(data =>{
-        if(!data)
-            res.status(404).send({messsage:"Not found cultivation", plot});
-        else res.send(data);
-    })
-    .catch(error =>{
-        res
-            .status(500)
-            .send({messsage:"Error retrieving cultivation", error})
-    });
+    CultivationDate.find({ plotId: plot })
+        .then(data => {
+            if (!data)
+                res.status(404).send({ messsage: "Not found cultivation", plot });
+            else res.send(data);
+        })
+        .catch(error => {
+            res
+                .status(500)
+                .send({ messsage: "Error retrieving cultivation", error })
+        });
 }

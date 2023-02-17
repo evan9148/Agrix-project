@@ -6,8 +6,6 @@ module.exports = app => {
 
     router.get("/", [authJwt.verifyToken,authJwt.isAdmin], machinebrand.getMachinebrand);
     router.post("/", [authJwt.verifyToken,authJwt.isAdmin], machinebrand.addMachinebrand);
-    // router.put("/:id", [authJwt.verifyToken,authJwt.isAdmin],machine.updateMachineById);
-    // router.delete("/:id", [authJwt.verifyToken,authJwt.isAdmin],machine.deleteMachineById);
 
     app.use('/api/machinebrand', router);
 };

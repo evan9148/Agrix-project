@@ -7,7 +7,7 @@ module.exports = mongoose => {
                 address: String,
                 vendorIdentifier: String,
             },
-            {timestamps:true}
+            { timestamps: true }
         )
     );
     return vendor;

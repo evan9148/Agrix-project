@@ -1,4 +1,4 @@
-module.exports = mongoose =>{
+module.exports = mongoose => {
     const implementIdentifier = mongoose.model(
         "implementIdentifier",
         mongoose.Schema(
@@ -7,7 +7,7 @@ module.exports = mongoose =>{
                     type: String,
                 }
             },
-            {timestamps:true}
+            { timestamps: true }
         )
     );
     return implementIdentifier;

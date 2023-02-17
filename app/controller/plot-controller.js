@@ -2,7 +2,7 @@ const db = require("../models");
 const Plot = db.plot;
 
 // Get All Plot Details...
-exports.plot = (req,res) =>{
+exports.plot = (req, res) => {
   const farmerId = req.query.farmerId;
   Plot.find(farmerId)
     .then(data => {
@@ -19,50 +19,50 @@ exports.plot = (req,res) =>{
 
 
 // Add Plot
-exports.addPlot =  (req, res) => {
+exports.addPlot = (req, res) => {
   const id = req.body._id;
-    const plot = new Plot({
-        farmerId:req.body.farmerId,
-        location: req.body.location,
-        state:req.body.state,
-        village: req.body.village,
-        district: req.body.district,
-        latitude: req.body.latitude,
-        long:req.body.long,
-        areaOfPlot :req.body.areaOfPlot,
-        perimeterOfPlot:req.body.perimeterOfPlot,
-        plotShape :req.body.plotShape,
-        soilType :req.body.soilType,
-        nutrientContentAnalysis:req.body.nutrientContentAnalysis,
-        waterSource : req.body.waterSource,
-        plotId:req.body.plotId,
-        clusterId:req.body.clusterId,
-        cropType: req.body.cropType,
-        variety: req.body.variety,
-        yield: req.body.yield,
-        cultivationDate: req.body.cultivationDate,
-        harvestingDate: req.body.harvestingDate,
-        seedAmount: req.body.seedAmount
-    });
+  const plot = new Plot({
+    farmerId: req.body.farmerId,
+    location: req.body.location,
+    state: req.body.state,
+    village: req.body.village,
+    district: req.body.district,
+    latitude: req.body.latitude,
+    long: req.body.long,
+    areaOfPlot: req.body.areaOfPlot,
+    perimeterOfPlot: req.body.perimeterOfPlot,
+    plotShape: req.body.plotShape,
+    soilType: req.body.soilType,
+    nutrientContentAnalysis: req.body.nutrientContentAnalysis,
+    waterSource: req.body.waterSource,
+    plotId: req.body.plotId,
+    clusterId: req.body.clusterId,
+    cropType: req.body.cropType,
+    variety: req.body.variety,
+    yield: req.body.yield,
+    cultivationDate: req.body.cultivationDate,
+    harvestingDate: req.body.harvestingDate,
+    seedAmount: req.body.seedAmount
+  });
 
-    plot
-        .save(plot)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(error => {
-            res.status(500).send({
-                message:
-                    error.message || "some error occurred while creating the farmer plot"
-            });
-        });
+  plot
+    .save(plot)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(error => {
+      res.status(500).send({
+        message:
+          error.message || "some error occurred while creating the farmer plot"
+      });
+    });
 
 }
 
 
-exports.plotsByFarmerId = (req,res) => {
+exports.plotsByFarmerId = (req, res) => {
   const farmerId = req.params.farmerId;
-  Plot.find({'farmerId':farmerId})
+  Plot.find({ 'farmerId': farmerId })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found Farmer plot with id " + farmerId });
@@ -78,7 +78,7 @@ exports.plotsByFarmerId = (req,res) => {
 // search api for plot by clusterId...
 exports.plotByClusterId = (req, res) => {
   const cluster = req.params.cluster
-  Plot.find({clusterId: cluster})
+  Plot.find({ clusterId: cluster })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found plot with clusterId" });
@@ -110,11 +110,11 @@ exports.plotById = (req, res) => {
 
 // search api for plot by plotId...
 exports.searchPlot = (req, res) => {
-  const plotId = { $regex: ".*" + req.query.plotId + ".*" , $options: "i" }
-  console.log(plotId,"pppppp")
-  Plot.find({plotId})
+  const plotId = { $regex: ".*" + req.query.plotId + ".*", $options: "i" }
+  console.log(plotId, "pppppp")
+  Plot.find({ plotId })
     .then(data => {
-      console.log(data,"dddd")
+      console.log(data, "dddd")
       if (!data)
         res.status(404).send({ message: "Not found plot with plotId" });
       else res.send(data);
@@ -131,11 +131,11 @@ exports.searchPlot = (req, res) => {
 //Get PlotList By Page and FarmerId..
 exports.plotListByPage = async (req, res) => {
   try {
-    const farmerId =req.params.farmerId;
+    const farmerId = req.params.farmerId;
     const page = parseInt(req.query.page);
     const size = parseInt(req.query.size);
     const skip = (page - 1) * size;
-    const plot = await Plot.find({'farmerId':farmerId}).skip(skip).limit(size);
+    const plot = await Plot.find({ 'farmerId': farmerId }).sort([['createdAt', 'desc']]).skip(skip).limit(size);
     res.json({
       plot,
       page,
@@ -150,8 +150,8 @@ exports.plotListByPage = async (req, res) => {
 
 // count the plot by farmerId.. 
 exports.plotCountByFarmerId = (req, res) => {
-  const farmerId =req.params.farmerId;
-  Plot.find({'farmerId':farmerId})
+  const farmerId = req.params.farmerId;
+  Plot.find({ 'farmerId': farmerId })
     .then((plotList) => {
       if (!plotList) {
         res
@@ -171,10 +171,10 @@ exports.plotCountByFarmerId = (req, res) => {
         .status(500)
         .send({ message: "Error retrieving Farmer plot with id=" + farmerId });
     });
-};  
+};
 
 
-exports.updatePlotById = (req, res) =>{
+exports.updatePlotById = (req, res) => {
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
