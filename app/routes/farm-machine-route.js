@@ -7,7 +7,7 @@ module.exports = app => {
   router.post("/operation/start", farmMachine.operationStart);
   router.post("/operation/stop", farmMachine.operationStop);
   router.get("/operation", farmMachine.operationAll);
-  router.get("operation/alldata", farmMachine.getHistoryByPhone);
+  router.get("/operationhistory/:phoneNumber" ,farmMachine.getHistoryByPhone)
   router.get("/page", farmMachine.operationByPage);
   router.get("/operation/:key", farmMachine.operationByMachineId);
 
