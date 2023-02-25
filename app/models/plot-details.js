@@ -18,12 +18,7 @@ module.exports = mongoose => {
         waterSource: String,
         plotId: String,
         clusterId: String,
-        cropType: String,
-        variety: String,
-        yield: Number,
-        cultivationDate: String,
-        harvestingDate: String,
-        seedAmount: Number
+        googleEarthLink: String
       },
       { timestamps: true }
     )
