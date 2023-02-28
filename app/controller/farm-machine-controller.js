@@ -78,37 +78,19 @@ exports.operationAll = (req, res) => {
 
 
 //Get API for machine-history according to phone number
-exports.getHistoryByPhone = async (req, res) => {
-  try {
-    const page = parseInt(req.query.page);
-    const size = parseInt(req.query.size);
-    const skip = (page - 1) * size;
-    const total = await FarmMachine.countDocuments();
-    const phoneNumber = req.params.phoneNumber;
-    const farmHistory = await FarmMachine.find({ phoneNumber: phoneNumber }).sort([['createdAt', 'desc']]).skip(skip).limit(size);
-
-    res.json({
-      farmHistory,
-      total,
-      page,
-      size,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(400).json(error);
-  }
-  // const phoneNumber = req.params.phoneNumber;
-  // FarmMachine.find({ phoneNumber: phoneNumber })
-  //   .then(data => {
-  //     if (!data)
-  //       res.status(404).send({ message: "Not found any history for this contact" })
-  //     else res.send(data)
-  //   })
-  //   .catch(err => {
-  //     res
-  //       .status(500)
-  //       .send({ message: "Error retrieving history" })
-  //   })
+exports.getHistoryByPhone = (req, res) => {
+  const phoneNumber = req.params.phoneNumber;
+  FarmMachine.find({ phoneNumber: phoneNumber })
+    .then(data => {
+      if (!data)
+        res.status(404).send({ message: "Not found any history for this contact" })
+      else res.send(data)
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving history" })
+    })
 }
 
 

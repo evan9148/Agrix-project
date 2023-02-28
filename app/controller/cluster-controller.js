@@ -10,7 +10,7 @@ exports.cluster = async (req, res) => {
     const skip = (page - 1) * size;
 
     const total = await Cluster.countDocuments();
-    const cluster = await Cluster.find().sort([['createdAt', 'desc']]).skip(skip).limit(size);
+    const cluster = await Cluster.find().skip(skip).limit(size);
 
     res.json({
       cluster,

@@ -73,7 +73,7 @@ exports.machine = async (req, res) => {
     const skip = (page - 1) * size;
 
     const total = await Machine.countDocuments();
-    const machine = await Machine.find().sort([['createdAt', 'desc']]).skip(skip).limit(size);
+    const machine = await Machine.find().skip(skip).limit(size);
 
     res.json({
       machine,

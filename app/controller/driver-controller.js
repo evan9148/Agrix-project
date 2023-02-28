@@ -28,7 +28,7 @@ exports.Driver = async (req, res) => {
     const skip = (page - 1) * size;
 
     const total = await Driver.countDocuments();
-    const driver = await Driver.find().sort([['createdAt', 'desc']]).skip(skip).limit(size);
+    const driver = await Driver.find().skip(skip).limit(size);
 
     res.json({
       driver,
