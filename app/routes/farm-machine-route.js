@@ -5,7 +5,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   router.post("/operation/start", farmMachine.operationStart);
-  router.post("/operation/stop", farmMachine.operationStop);
+  router.put("/operation/stop", farmMachine.operationStop);
   router.get("/operation", farmMachine.operationAll);
   router.get("/operationhistory/:phoneNumber" ,farmMachine.getHistoryByPhone)
   router.get("/page", farmMachine.operationByPage);
